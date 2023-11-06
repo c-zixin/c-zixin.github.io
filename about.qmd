@@ -1,5 +1,0 @@
----
-title: "About"
----
-
-I am Zi Xin, a year 1 freshie studying Industrial Design and I have a strong passion for UX/UI. In my free time, I enjoy playing sports and solving puzzles. I like keeping myself busy but also enjoy slow paced moments. I am taking this module as part of my minor, Interactive Media Development. [Here](https://github.com/c-zixin/My-tutorial.git) are all the files I have from week 1 to 9.
