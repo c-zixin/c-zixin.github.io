@@ -1,0 +1,112 @@
+---
+title: "Final Project data cleaning"
+author: "Chen Zi Xin"
+date: "2023-10-30"
+output: html_document
+---
+
+## Splitting into Male and Female 
+
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+Females <- Speed_Dating_Data[Speed_Dating_Data$gender == 1, ]
+Males <- Speed_Dating_Data[Speed_Dating_Data$gender == 0, ]
+```
+
+#MALE DATA 
+##Filtering the above average matches 
+```{r eval=TRUE, echo=TRUE}
+library(dplyr)
+library(tidyverse)
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+
+Males_Attributes <- Males %>% filter(attr_o >= 5, sinc_o >= 5, intel_o >= 5, fun_o >= 5, amb_o >= 5, shar_o >= 5) %>% filter(match ==1) %>% select(attr_o,sinc_o,intel_o,fun_o,amb_o,shar_o)
+
+```
+
+##Calculating mean of all attributes
+```{r eval=TRUE, echo=TRUE}
+library(dplyr)
+
+attractive <- Males_Attributes %>% 
+summarize(mean_attr_o = mean(attr_o, na.rm = TRUE))
+print(attractive)
+
+sincere <- Males_Attributes %>% 
+summarize(mean_sinc = mean(sinc_o, na.rm = TRUE))
+print(sincere)
+
+intelligent <- Males_Attributes %>% 
+summarize(mean_intel = mean(intel_o, na.rm = TRUE))
+print(intelligent)
+
+fun <- Males_Attributes %>% 
+summarize(mean_fun = mean(fun_o, na.rm = TRUE))
+print(fun)
+
+ambitious<- Males_Attributes %>% 
+summarize(mean_amb = mean(amb_o, na.rm = TRUE))
+print(ambitious)
+
+shared_interests <- Males_Attributes %>% 
+summarize(mean_shar = mean(shar_o, na.rm = TRUE))
+print(shared_interests)
+```
+
+##Plotting Visualisation for Male Attributes (Ranking)
+
+```{r eval=TRUE, echo=TRUE}
+library(ggplot2)
+
+Attributes <- c("Attractive", "Sincere", "Intelligent", "Fun", "Ambitious", "Shared Interests")
+
+Scores <- c(7.637963, 7.890741, 7.878704, 7.712037, 7.366667, 7.065741)
+
+Males_Attributes <- data.frame(
+     Attribute = Attributes,
+    Score = Scores)
+
+ggplot(Males_Attributes, aes(x = Attribute, y = Score)) +
+     geom_segment(aes(xend = Attribute, yend = "Attractive"), size = 2, lineend = "round") +
+     labs(x = "Attributes", y = "Scores") +
+     theme_minimal()
+```
+
+#FEMALE DATA 
+##Filtering the above average matches 
+```{r eval=TRUE, echo=TRUE}
+library(dplyr)
+
+Female_Attributes <- Females %>% filter(attr_o >= 5, sinc_o >= 5, intel_o >= 5, fun_o >= 5, amb_o >= 5, shar_o >= 5) %>% filter(match ==1) %>% select(attr_o,sinc_o,intel_o,fun_o,amb_o,shar_o)
+
+```
+
+##Calculating mean of all attributes
+```{r eval=TRUE, echo=TRUE}
+library(dplyr)
+
+attractive <- Female_Attributes %>% 
+summarize(mean_attr_o = mean(attr_o, na.rm = TRUE))
+print(attractive)
+
+sincere <- Female_Attributes %>% 
+summarize(mean_sinc = mean(sinc_o, na.rm = TRUE))
+print(sincere)
+
+intelligent <- Female_Attributes %>% 
+summarize(mean_intel = mean(intel_o, na.rm = TRUE))
+print(intelligent)
+
+fun <- Female_Attributes %>% 
+summarize(mean_fun = mean(fun_o, na.rm = TRUE))
+print(fun)
+
+ambitious<- Female_Attributes %>% 
+summarize(mean_amb = mean(amb_o, na.rm = TRUE))
+print(ambitious)
+
+shared_interests <- Female_Attributes %>% 
+summarize(mean_shar = mean(shar_o, na.rm = TRUE))
+print(shared_interests)
+```
