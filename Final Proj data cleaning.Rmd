@@ -5,10 +5,32 @@ date: "2023-10-30"
 output: html_document
 ---
 
+## General Data
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+library(ggplot2)
+
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+
+General_Attributes <- Speed_Dating_Data %>% 
+  select(attr_o, sinc_o, intel_o, fun_o, amb_o, shar_o)
+
+General_Attributes_long <- General_Attributes %>%
+  pivot_longer(cols = everything(), names_to = "Attribute", values_to = "Rating")
+
+ggplot(General_Attributes_long, aes(x = Attribute, y = Rating, fill = Attribute)) +
+  geom_boxplot() +
+  geom_jitter(position = position_jitter(width = 0.3, height = 0), alpha = 0.5) +
+  labs(x = "Attribute", y = "Rating") +
+  ggtitle("Distribution of Ratings for General Attributes") +
+  scale_fill_discrete(name = "Attribute")
+```
+
 ## Splitting into Male and Female 
 
 ```{r eval=TRUE, echo=TRUE}
 library(tidyverse)
+
 Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
 Females <- Speed_Dating_Data[Speed_Dating_Data$gender == 1, ]
 Males <- Speed_Dating_Data[Speed_Dating_Data$gender == 0, ]

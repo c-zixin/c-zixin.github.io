@@ -1,0 +1,71 @@
+---
+title: "The Right One"
+---
+
+### **Ever wondered what makes an ideal partner?**
+
+![](src/img1.jpeg)
+
+***Have you ever thought of what makes your ideal partner? Will they be the most attractive person in the crowd? The one who can make you laugh the loudest? Or the one who reaches for the stars?***
+
+<p style="text-align: justify;">
+
+Find out if what you are looking for is also what others are looking for. Perhaps this could change your mind about certain attributes. Dating was increasingly mentioned in online articles recently, making this a rising topic, one that sparks discussions. According to an article by [TodayOnline](https://www.todayonline.com/singapore/2020-census-more-singles-singapore-all-age-groups-rate-population-growth-slowest-1970), we are in the slowest decade of population growth since 1970. Based on another article by [TodayOnline](https://www.todayonline.com/singapore/dating-singles-finding-right-match-2020411), the lack of confidence plays a big part as "It's usually those who are quiet, socially awkward... they don't know how to make themselves attractive and it slowly snowballs," as shared by an interviewee. In addition to [Zula's](https://zula.sg/singaporeans-changing-dating-preferences/) recent article, "Survey Shows 81% Of Singaporeans Prefer To Date Someone Kind, Physical Attributes Not As Important, it mentions that"81% of the respondents also mentioned that being kind is more important than physical attributes" and this motivates me to further pick out important attributes to help single and lost individuals see if they are on the right track!
+
+</p>
+
+### **Rate The Attributes!**
+
+Rate the following attributes and learn more about the general rating of these attributes.
+
+<p>
+
+<iframe height="550" width="100%" frameborder="no" src="https://c-zixin.shinyapps.io/speeddating/">
+
+</iframe>
+
+</p>
+
+### Expectations VS Reality
+
+Now, let's see if your top attribute is similar to majority!
+
+```{r, eval=TRUE,echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tidyr)
+library(ggplot2)
+```
+
+```{r, eval=TRUE,echo=FALSE, message=FALSE, warning=FALSE}
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+
+General_Attributes <- Speed_Dating_Data %>% 
+  select(attr_o, sinc_o, intel_o, fun_o, amb_o, shar_o)
+
+General_Attributes_long <- General_Attributes %>%
+  pivot_longer(cols = everything(), names_to = "Attribute", values_to = "Rating")
+
+ggplot(General_Attributes_long, aes(x = Attribute, y = Rating, fill = Attribute)) +
+  geom_boxplot() +
+  geom_jitter(position = position_jitter(width = 0.3, height = 0), alpha = 0.5) +
+  labs(x = "Attribute", y = "Rating") +
+  ggtitle("Distribution of Ratings for General Attributes") +
+  scale_fill_discrete(name = "Attribute")
+
+```
+
+<p>
+
+From the visualisation above, we can see that our top 3 attributes are as follows:
+
+| Attributes                                                               |
+|--------------------------------------------------------------------------|
+| ![](images/Screenshot%202023-11-14%20at%203.35.16%20PM.png){width="800"} |
+| ![](images/Screenshot%202023-11-14%20at%203.35.22%20PM.png){width="800"} |
+| ![](images/Screenshot%202023-11-14%20at%203.35.33%20PM.png){width="800"} |
+
+### Does Gender Affect The Top Attributes?
+
+### Other Factors - Age, Career
+
+### Conclusion

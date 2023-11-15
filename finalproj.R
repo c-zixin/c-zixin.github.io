@@ -1,53 +1,46 @@
 library(shiny)
+library(ggplot2)
 
 # Define UI ----
 ui <- fluidPage(
-  titlePanel("Rate the Attributes!"),
-  
-  tags$style(HTML(".pink-background { background-color: #FFB6C1; }")),
-  
-  sidebarLayout(
-    sidebarPanel(
-      style = "text-align: center;",
-      sliderInput("Attractive", "Rate: Attractive", min = 1, max = 10, value = 5),
-      sliderInput("Ambitious", "Rate: Ambitious", min = 1, max = 10, value = 5),
-      sliderInput("Fun", "Rate: Fun", min = 1, max = 10, value = 5),
-      sliderInput("Intelligent", "Rate: Intelligent", min = 1, max = 10, value = 5),
-      sliderInput("Sincere", "Rate: Sincere", min = 1, max = 10, value = 5),
-      sliderInput("Shared Interest", "Rate: Shared Interest", min = 1, max = 10, value = 5),
-      
-      textOutput("TopRatedAttribute"),
-      align = "center"
-    ),
-    
-    mainPanel(
-      h1("What Makes An Ideal Partner"),
-      em(h4(" Have you ever thought of what makes your ideal partner?")),
-      p("Will they be the most attractive person in the crowd?"),
-      p("The one who can make you laugh the loudest?"),
-      p("Or the one who will love you with their 200%?"),
-      br(),
-      p(h5("Find out if what you are looking for is also what others are looking for. Perhaps this could change your mind about certain attributes. Dating was increasingly mentioned in online articles recently, making this a rising topic, one that sparks discussions.")),
-      p(h5("According to an article by TodayOnline, we are in the slowest decade of population growth since 1970. Based on another article by TodayOnline, the lack of confidence plays a big part as “It’s usually those who are quiet, socially awkward… they don’t know how to make themselves attractive and it slowly snowballs,” as shared by an interviewee.")),
-      p(h5("In addition to Zula’s recent article, “Survey Shows 81% Of Singaporeans Prefer To Date Someone Kind, Physical Attributes Not As Important,” it mentions that “81% of the respondents also mentioned that being kind is more important than physical attributes” and this motivates me to further pick out important attributes to help single and lost individuals see if they are on the right track.")),
-      br(),
-      p(h5("Discover the best attribute to have as well as the least important attribute to most. Come along and let's find out more about you and your ideal partner!")),
-      plotOutput("featurePlot")
+  tags$head(
+    tags$style(
+      HTML("body { overflow: hidden; }"),
+      HTML(".sidebar { text-align: left; }"),
+      HTML(".main-panel { overflow-y: scroll; }"),
+      HTML(".slider-container { width: 300%; margin: 0 auto; }"),  # Adjust slider width and centering
+      HTML(".slider-input { width: 100%; }")  # Adjust slider input width
     )
   ),
   
-  class = "pink-background"
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("Attractive", "Attractive", min = 1, max = 10, value = 5),
+      sliderInput("Ambitious", "Ambitious", min = 1, max = 10, value = 5),
+      sliderInput("Fun", "Fun", min = 1, max = 10, value = 5),
+      sliderInput("Intelligent", "Intelligent", min = 1, max = 10, value = 5),
+      sliderInput("Sincere", "Sincere", min = 1, max = 10, value = 5),
+      textOutput("TopRatedAttribute")
+    ),
+    
+    mainPanel(
+      div(
+        img(src = src/img2.jpeg, height = 500, width = 500),
+        style = "float: left; margin-top: 20px;"
+      )
+    )
+  )
 )
 
 server <- function(input, output) {
   output$TopRatedAttribute <- renderText({
     # Define a vector of attribute names
-    attribute_names <- c("Attractive", "Sincere", "Intelligent", "Fun", "Ambitious", "SharedInterest")
+    attribute_names <- c("Attractive", "Sincere", "Intelligent", "Fun", "Ambitious")
     
     # Find the attribute with the maximum rating
-    max_rating <- max(input$Attractive, input$Sincere, input$Intelligent, input$Fun, input$Ambitious, input$SharedInterest)
+    max_rating <- max(input$Attractive, input$Sincere, input$Intelligent, input$Fun, input$Ambitious)
     
-    top_rated_attribute <- attribute_names[which.max(c(input$Attractive, input$Sincere, input$Intelligent, input$Fun, input$Ambitious, input$SharedInterest))]
+    top_rated_attribute <- attribute_names[which.max(c(input$Attractive, input$Sincere, input$Intelligent, input$Fun, input$Ambitious))]
     
     paste("The top-rated attribute is:", top_rated_attribute, "with a rating of", max_rating)
   })
