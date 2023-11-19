@@ -5,11 +5,11 @@ library(ggplot2)
 ui <- fluidPage(
   tags$head(
     tags$style(
-      HTML("body { overflow: hidden; }"),
       HTML(".sidebar { text-align: left; }"),
       HTML(".main-panel { overflow-y: scroll; }"),
-      HTML(".slider-container { width: 300%; margin: 0 auto; }"),  # Adjust slider width and centering
+      HTML(".slider-container { width: 80%; margin: 0 auto; padding: 20px; }"),  # Adjust slider width and centering
       HTML(".slider-input { width: 100%; }")  # Adjust slider input width
+      
     )
   ),
   
@@ -25,7 +25,7 @@ ui <- fluidPage(
     
     mainPanel(
       div(
-        img(src = src/img2.jpeg, height = 500, width = 500),
+        img(src = "img2.jpeg", height = 500, width = 500),
         style = "float: left; margin-top: 20px;"
       )
     )

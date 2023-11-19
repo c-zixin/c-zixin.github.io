@@ -5,7 +5,7 @@ account: c-zixin
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 10427284
-bundleId: 7926376
+bundleId: 7928787
 url: https://c-zixin.shinyapps.io/speeddating/
 version: 1
 asMultiple: FALSE

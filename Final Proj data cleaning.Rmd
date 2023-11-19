@@ -36,7 +36,40 @@ Females <- Speed_Dating_Data[Speed_Dating_Data$gender == 1, ]
 Males <- Speed_Dating_Data[Speed_Dating_Data$gender == 0, ]
 ```
 
+##Successful Matches 
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+All_Matches <- Speed_Dating_Data %>% filter(match == 1) %>% select(match, gender, age_o)
+
+# Create a ggplot
+ggplot(All_Matches, aes(x = age_o)) +
+  geom_bar() +
+  labs(title = "Successful Matches by Age", x = "Age", y = "Count") +
+  theme_minimal()
+
+```
+
 #MALE DATA 
+
+##Successful Matches 
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+Males <- Speed_Dating_Data[Speed_Dating_Data$gender == 0, ]
+Male_Matches <-Males %>% filter(match == 1) %>% select(match)
+```
+
+##Age that is most "attractive"
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+Males <- Speed_Dating_Data[Speed_Dating_Data$gender == 0, ]
+Male_Matches_Age <-Males %>% filter(match == 1) %>% select(age_o)
+```
+
 ##Filtering the above average matches 
 ```{r eval=TRUE, echo=TRUE}
 library(dplyr)
@@ -96,6 +129,27 @@ ggplot(Males_Attributes, aes(x = Attribute, y = Score)) +
 ```
 
 #FEMALE DATA 
+
+##Successful Matches 
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+Females <- Speed_Dating_Data[Speed_Dating_Data$gender == 1, ]
+Female_Matches <- Females %>% filter(match == 1)%>% select(match)
+
+```
+
+##Age that is most "attractive"
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+Females <- Speed_Dating_Data[Speed_Dating_Data$gender == 1, ]
+Female_Matches_Age <- Females %>% filter(match == 1)%>% select(age_o)
+
+```
+
 ##Filtering the above average matches 
 ```{r eval=TRUE, echo=TRUE}
 library(dplyr)
@@ -131,4 +185,111 @@ print(ambitious)
 shared_interests <- Female_Attributes %>% 
 summarize(mean_shar = mean(shar_o, na.rm = TRUE))
 print(shared_interests)
+```
+
+```{r eval=TRUE, echo=TRUE}
+library(ggplot2)
+
+Attributes <- c("Attractive", "Sincere", "Intelligent", "Fun", "Ambitious", "Shared Interests")
+
+Scores <- c(7.48768, 8.01232, 8.204312, 7.917864, 7.74538, 7.25462	)
+
+Female_Attributes <- data.frame(
+     Attribute = Attributes,
+    Score = Scores)
+
+ggplot(Female_Attributes, aes(x = Attribute, y = Score)) +
+     geom_segment(aes(xend = Attribute, yend = "Attractive"), size = 2, lineend = "round") +
+     labs(x = "Attributes", y = "Scores") +
+     theme_minimal()
+```
+
+##Comparing Male and Female Data
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+library(readr)
+library(ggplot2)
+
+# Assuming 'gender' and 'match' are columns in your data
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+
+# Filter and select relevant columns
+Successful_Matches <- Speed_Dating_Data %>%
+  filter(match == 1) %>%
+  select(match, gender)
+
+# Calculate success rates
+success_rates <- Successful_Matches %>%
+  group_by(gender) %>%
+  summarise(success_rate = n() / nrow(Successful_Matches))
+
+# Create a dot plot for success rates
+ggplot(success_rates, aes(x = gender, y = success_rate, color = gender)) +
+  geom_point(position = position_dodge(width = 0.2), size = 3) +
+  labs(x = "Gender",
+       y = "Success Rate",
+       title = "Dot Plot of Success Rates for Male and Female Matches") +
+  theme_minimal()
+
+```
+
+##Comparing Male and Female Data (Attributes)
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+library(ggplot2)
+
+# Sample data or replace it with your actual data
+Males_Scores <- c(7.637963, 7.890741, 7.878704, 7.712037, 7.366667, 7.065741)
+Female_Scores <- c(7.48768, 8.01232, 8.204312, 7.917864, 7.74538, 7.25462)
+
+Attributes <- c("Attractive", "Sincere", "Intelligent", "Fun", "Ambitious", "Shared Interests")
+
+Gender <- data.frame(
+  Gender = rep(c("Male", "Female"), each = length(Males_Scores)),
+  Attributes = rep(Attributes, 2),
+  Scores = c(Males_Scores, Female_Scores)
+)
+
+# Create a ggplot
+ggplot(Gender, aes(x = Attributes, y = Scores, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  labs(x = "Attributes", y = "Scores", fill = "Gender") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+### Career
+```{r eval=TRUE, echo=TRUE}
+library(tidyverse)
+library(ggplot2)
+
+Speed_Dating_Data <- read_csv("Speed Dating Data.csv")
+
+# Filter for successful matches and select the field column
+fields_data <- Speed_Dating_Data %>% 
+  filter(match == 1) %>% 
+  select(field)
+
+# Count the occurrences of each field
+field_counts <- table(fields_data$field)
+
+# Create a dataframe from the table
+field_counts_df <- data.frame(Field = names(field_counts), Count = as.numeric(field_counts))
+
+# Order the dataframe by count in descending order
+field_counts_df <- field_counts_df %>% arrange(desc(Count))
+
+# Select the top 30 fields
+top_30_fields <- head(field_counts_df, 30)
+
+# Create a bar plot with expanded horizontal length
+ggplot(top_30_fields, aes(x = reorder(Field, -Count), y = Count)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Top 30 Most Popular Fields of Study",
+       x = "Field of Study",
+       y = "Number of Successful Matches") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
 ```
