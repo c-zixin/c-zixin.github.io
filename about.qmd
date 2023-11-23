@@ -103,7 +103,7 @@ ggplot(Gender, aes(x = Attributes, y = Scores, fill = Gender)) +
 
 <p>With reference to [Zula's](https://zula.sg/singaporeans-changing-dating-preferences/) recent article, it is mentioned that "81% of the respondents also mentioned that being kind is more important than physical attributes". The visualisation above supports that statement by categorizing "Attractive" as a non-essential but good to have attribute. Both genders have similar top 3 preferred attributes - Intelligent, Sincere and Fun. Despite the different rankings from both genders, these are the attributes that are generally essential so for all the single pringles out there, do take note!</p>
 
-### More Than Just Personality! - Age & Career
+### More Than Just Personality! - Age & Field Of Study
 
 For those who are wondering if personaility is the only factor, it's not! There are various factors that affects the chances of finding a partner such as age and career. There are too many discussions on how big the age gap should or should not be, it gets a little overwhelming.
 
